@@ -1,6 +1,6 @@
 {
   "name": "experimental-code",
-  "version": "2.11.7-alpha3",
+  "version": "2.11.7",
   "description": "",
   "main": "index.js",
   "scripts": {
