@@ -13,8 +13,7 @@ jobs:
     steps:
         - name: "Bump"
           uses: actions/checkout@v2
-          uses: copapow/version-bump-package@v1
-              # id: bump
+          uses: copapow/version-bump-package@v1               # id: bump
               with:
                   major_label: version-major # optional - default = major
                   minor_label: version-minor # optional - default = minor
