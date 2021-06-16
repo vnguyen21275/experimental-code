@@ -11,16 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: "Bump"
-        uses: actions/checkout@v2
+      - name: "Checkout source code"
+        uses: "actions/checkout@v2"
+        with:
+          ref: ${{ github.ref }}
+      - name: "cat package.json"
+        run: cat ./package.json
+      - name: "Setup Node.js"
+        uses: "actions/setup-node@v1"
+        with:
+          node-version: 12
+      - name: "Automated Version Bump"
         uses: copapow/version-bump-package@v1               
-          id: bump
-          with:
-            major_label: version-major # optional - default = major
-            minor_label: version-minor # optional - default = minor
-            patch_label: version-patch # optional - default = patch
-            default_branch: main       # optional = default = master
-            github_token: ${{ secrets.GITHUB_TOKEN }} # required
+        id: bump
+        with:
+          major_label: version-major # optional - default = major
+          minor_label: version-minor # optional - default = minor
+          patch_label: version-patch # optional - default = patch
+          default_branch: main       # optional = default = master
+          github_token: ${{ secrets.GITHUB_TOKEN }} # required
         run: |
             echo "Previous version: ${{ steps.bump.outputs.previous_version }}"
             echo "New Version: ${{ steps.bump.outputs.new_version }}"
+      - name: "cat package.json"
+        run: cat ./package.json
