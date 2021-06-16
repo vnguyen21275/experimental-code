@@ -16,9 +16,6 @@ jobs:
       - uses: copapow/version-bump-package@v1
         id: bump
         with:
-          major_label: version-major # optional - default = major
-          minor_label: version-minor # optional - default = minor
-          patch_label: version-patch # optional - default = patch
           default_branch: main       # optional = default = master
           github_token: ${{ secrets.GITHUB_TOKEN }} # required
       - run: |
