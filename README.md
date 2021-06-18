@@ -1,3 +1,4 @@
 # Experimentation Playground
 
-1. Trying out different GitHub actions for updating the application's version.
+1. Testing different GitHub actions for updating the application's version.
+2. Testing sed commands
