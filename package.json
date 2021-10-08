@@ -1,7 +1,7 @@
 {
   "name": "experimental-code",
   "version": "3.6.1",
-  "description": "",
+  "description": "at 3.6.1 before the PR merge",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
