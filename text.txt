@@ -1,1 +1,3 @@
 Hello world! 
+
+Adding some more text for the version bump
