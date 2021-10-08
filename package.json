@@ -1,6 +1,6 @@
 {
   "name": "experimental-code",
-  "version": "3.6.1",
+  "version": "3.7.0",
   "description": "at 3.6.1 before the PR merge",
   "main": "index.js",
   "scripts": {
