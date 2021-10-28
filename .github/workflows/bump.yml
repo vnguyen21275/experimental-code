@@ -26,4 +26,4 @@ jobs:
       - uses: EndBug/add-and-commit@v7
         with:
           branch: main
-          message: 'Bump package version'
+          message: 'chore(package.json): ${{ steps.bump.outputs.new_version }} release'
