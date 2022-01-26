@@ -1,29 +1,29 @@
-name: Bump Package Version On Merge
+# name: Bump Package Version On Merge
 
-on:
-  pull_request:
-    types: [closed]
-    branches:
-      - main
+# on:
+#   pull_request:
+#     types: [closed]
+#     branches:
+#       - main
 
-jobs:
-  bump-package-version:
-    # Only run if the PR closed by merging
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: copapow/version-bump-package@v1
-        id: bump
-        with:
-          default_branch: main       # optional = default = master
-          github_token: ${{ secrets.GITHUB_TOKEN }} # required
-      - run: |
-            echo "Previous version: ${{ steps.bump.outputs.previous_version }}"
-            echo "New Version: ${{ steps.bump.outputs.new_version }}"
-      - name: "cat package.json"
-        run: cat ./package.json
-      - uses: EndBug/add-and-commit@v7
-        with:
-          branch: main
-          message: 'chore(package.json): ${{ steps.bump.outputs.new_version }} release'
+# jobs:
+#   bump-package-version:
+#     # Only run if the PR closed by merging
+#     if: github.event.pull_request.merged == true
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: copapow/version-bump-package@v1
+#         id: bump
+#         with:
+#           default_branch: main       # optional = default = master
+#           github_token: ${{ secrets.GITHUB_TOKEN }} # required
+#       - run: |
+#             echo "Previous version: ${{ steps.bump.outputs.previous_version }}"
+#             echo "New Version: ${{ steps.bump.outputs.new_version }}"
+#       - name: "cat package.json"
+#         run: cat ./package.json
+#       - uses: EndBug/add-and-commit@v7
+#         with:
+#           branch: main
+#           message: 'chore(package.json): ${{ steps.bump.outputs.new_version }} release'
