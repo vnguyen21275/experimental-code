@@ -19,9 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: gagle/package-version@v1.0.0
-      - id: package-version
 
       - name: Read package.json
-        run: ${{ steps.package-version.outputs.version }}
-      - run: | 
-          echo "Current package.json version: ${{ steps.package-version.outputs.version }}"
+        id: package-version
+        run: Current package.json version is ${{ steps.package-version.outputs.version }}
