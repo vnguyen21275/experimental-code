@@ -1,0 +1,27 @@
+name: Shall I Release to Prod?
+# 1. Upon PR merge, compare version in package.json vs latest GH tag.
+# 2. Create a new tag if the version in the package.json is greater than the latest GH tag. If not, end the process
+# 3. Push the tag.
+# 4. Release to prod.
+
+# on:
+#   pull_request:
+#     types: [closed]
+#     branches: [main]
+
+# Just for testing on this branch
+on: push
+
+jobs:
+  compare-versions:
+    # Only run if the PR closed by merging
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Read package.json
+        uses: dutscher/read-package-json-endpoint-actions@v1.33.7
+        id: package-json-endpoint
+
+      - name: Show version number
+        run: echo "${{ steps.package-json-endpoint.outputs.endpoint }}"
