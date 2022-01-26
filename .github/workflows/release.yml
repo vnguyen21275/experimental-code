@@ -18,9 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Read package.json
       - uses: gagle/package-version@v1
-        id: package-version
 
-      - run: ${{ steps.package-version.outputs.version }}
+      - name: Read package.json
+        id: package-version
+        run: ${{ steps.package-version.outputs.version }}
