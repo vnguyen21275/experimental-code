@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.4.0
+        with:
+          fetch-depth: 0
       - uses: gagle/package-version@v1.0.0
         id: package-version
       - uses: "WyriHaximus/github-action-get-previous-tag@v1"
@@ -40,7 +42,7 @@ jobs:
       #     echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       #     echo "TAG=${{ steps.latest-tag.outputs.VERSION }}" >> $GITHUB_ENV
 
-      - name: 'Get Previous Tag'
+      - name: Get previous tag and store it as the environment variable TAG
         run: echo "TAG=${{ steps.previous-tag.outputs.tag }}" >> $GITHUB_ENV
 
       - name: Display the version and tag
