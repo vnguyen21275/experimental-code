@@ -24,6 +24,8 @@ jobs:
       - uses: actions/checkout@v2.4.0
       - uses: gagle/package-version@v1.0.0
         id: package-version
+      - uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        id: previous-tag
 
       - name: Read the version from the package.json and store it as the environment variable VERSION
         run: echo "VERSION=${{ steps.package-version.outputs.version }}" >> $GITHUB_ENV
@@ -39,8 +41,6 @@ jobs:
       #     echo "TAG=${{ steps.latest-tag.outputs.VERSION }}" >> $GITHUB_ENV
 
       - name: 'Get Previous Tag'
-        id: previous-tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
         run: echo "TAG=${{ steps.previous-tag.outputs.tag }}" >> $GITHUB_ENV
 
       - name: Display the version and tag
