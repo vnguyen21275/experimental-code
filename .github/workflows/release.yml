@@ -4,6 +4,7 @@ name: Shall I Release to Prod?
 # 3. Push the tag.
 # 4. Release to prod.
 
+# Only run if the PR closed by merging to main
 # on:
 #   pull_request:
 #     types: [closed]
@@ -18,7 +19,6 @@ env:
 
 jobs:
   get-versions:
-    # Only run if the PR closed by merging
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.4.0
@@ -40,8 +40,10 @@ jobs:
           echo ${{ env.VERSION }}
           echo ${{ env.TAG }}
 
-      - name: Compare the versions
-        if: ${{ env.VERSION > env.TAG }}
-        run: echo version is greater
-
-      # - name: Release to Production
+  release:
+    runs-on: ubuntu-latest
+    needs: get-versions
+    if: ${{ env.VERSION > env.TAG }}
+    steps:
+      - name: Check
+        run: echo version is greater here, so let's party!
