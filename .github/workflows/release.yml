@@ -26,7 +26,8 @@ jobs:
         id: package-version
 
       - name: Read the version from the package.json
-        run: echo ${{ steps.package-version.outputs.version }} >> ${{ env.VERSION }}
+        # run: echo ${{ steps.package-version.outputs.version }} >> ${{ env.VERSION }}
+        run: echo "VERSION=${{ steps.package-version.outputs.version }}" >> $GITHUB_ENV
 
       # - name: Get the latest tag from the main branch
       #   id: latest-tag
