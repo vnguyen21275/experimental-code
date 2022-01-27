@@ -28,9 +28,9 @@ jobs:
       - name: Read the version from the package.json
         run: echo ${{ steps.package-version.outputs.version }} >> ${{ env.VERSION }}
 
-      - name: Get the latest tag from the main branch
-        id: latest-tag
-        run: echo "$GITHUB_LATEST_TAG=::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+      # - name: Get the latest tag from the main branch
+      #   id: latest-tag
+      #   run: echo set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
       - name: Display the version and tag
         run: |
