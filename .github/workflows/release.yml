@@ -19,9 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: gagle/package-version@v1.0.0
+        id: package-version
 
       - name: Read package.json
-        id: package-version
         run: echo "$GITHUB_PACKAGE_VERSION=${{ steps.package-version.outputs.version }}" >> $GITHUB_ENV
 
       - name: Get the latest tag
