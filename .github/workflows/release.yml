@@ -26,10 +26,10 @@ jobs:
 
       - name: Read package.json
         id: package-version
-        run: ${{ steps.package-version.outputs.version }} >> $env.VERSION
+        run: ${{ steps.package-version.outputs.version }} >> ${{ env.VERSION }}
 
-      - name: Get the version
-        id: get_version
+      - name: Get the latest tag
+        id: git-tag
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
       - name: Display the version and tag
