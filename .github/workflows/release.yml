@@ -35,7 +35,7 @@ jobs:
       - name: Get the latest tag from the main branch
         id: latest-tag
         run: | 
-          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+          echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
           echo "TAG=${{ steps.latest-tag.outputs.VERSION }}" >> $GITHUB_ENV
 
       - name: Display the version and tag
