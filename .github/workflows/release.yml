@@ -12,6 +12,10 @@ name: Shall I Release to Prod?
 # Just for testing on this branch
 on: push
 
+env:
+  VERSION: 0.0.0
+  TAG: 0.0.0
+
 jobs:
   compare-versions:
     # Only run if the PR closed by merging
@@ -21,14 +25,14 @@ jobs:
       - uses: gagle/package-version@v1.0.0
         id: package-version
 
-      - name: Read package.json
-        run: echo "$GITHUB_PACKAGE_VERSION=${{ steps.package-version.outputs.version }}" >> $GITHUB_ENV
+      - name: Read the version from the package.json
+        run: echo ${{ steps.package-version.outputs.version }} >> ${{ env.VERSION }}
 
-      - name: Get the latest tag
+      - name: Get the latest tag from the main branch
         id: latest-tag
         run: echo "$GITHUB_LATEST_TAG=::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
 
       - name: Display the version and tag
         run: |
-          echo $GITHUB_PACKAGE_VERSION
-          echo $GITHUB_LATEST_TAG
+          echo ${{ env.VERSION }}
+          echo ${{ env.TAG }}
