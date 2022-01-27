@@ -40,9 +40,8 @@ jobs:
           echo ${{ env.VERSION }}
           echo ${{ env.TAG }}
 
-  release-to-production:
-    runs-on: ubuntu-latest
-    steps:
       - name: Compare the versions
         if: ${{ env.VERSION > env.TAG }}
         run: echo version is greater
+
+      # - name: Release to Production
