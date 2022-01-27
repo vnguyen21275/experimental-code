@@ -17,7 +17,7 @@ env:
   TAG: 0.0.0
 
 jobs:
-  compare-versions:
+  get-versions:
     # Only run if the PR closed by merging
     runs-on: ubuntu-latest
     steps:
@@ -32,16 +32,6 @@ jobs:
       - name: Read the version from the package.json and store it as the environment variable VERSION
         run: echo "VERSION=${{ steps.package-version.outputs.version }}" >> $GITHUB_ENV
 
-      # - name: Get the latest tag from the main branch
-      #   id: latest-tag
-      #   run: echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
-
-      # - name: Get the latest tag from the main branch
-      #   id: latest-tag
-      #   run: | 
-      #     echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-      #     echo "TAG=${{ steps.latest-tag.outputs.VERSION }}" >> $GITHUB_ENV
-
       - name: Get previous tag and store it as the environment variable TAG
         run: echo "TAG=${{ steps.previous-tag.outputs.tag }}" >> $GITHUB_ENV
 
@@ -49,3 +39,10 @@ jobs:
         run: |
           echo ${{ env.VERSION }}
           echo ${{ env.TAG }}
+
+  release-to-production:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compare the versions
+        if: ${{ env.VERSION > env.TAG }}
+        run: echo version is greater
