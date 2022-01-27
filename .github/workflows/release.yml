@@ -25,13 +25,12 @@ jobs:
       - uses: gagle/package-version@v1.0.0
         id: package-version
 
-      - name: Read the version from the package.json
-        # run: echo ${{ steps.package-version.outputs.version }} >> ${{ env.VERSION }}
+      - name: Read the version from the package.json and store it as the environment variable VERSION
         run: echo "VERSION=${{ steps.package-version.outputs.version }}" >> $GITHUB_ENV
 
-      # - name: Get the latest tag from the main branch
-      #   id: latest-tag
-      #   run: echo set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: Get the latest tag from the main branch
+        id: latest-tag
+        run: echo "TAG=${{GITHUB_REF/refs\/tags\//}}" >> $GITHUB_ENV
 
       - name: Display the version and tag
         run: |
