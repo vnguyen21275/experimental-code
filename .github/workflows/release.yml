@@ -21,7 +21,7 @@ jobs:
     # Only run if the PR closed by merging
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.4.0
       - uses: gagle/package-version@v1.0.0
         id: package-version
 
@@ -32,11 +32,16 @@ jobs:
       #   id: latest-tag
       #   run: echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
 
-      - name: Get the latest tag from the main branch
-        id: latest-tag
-        run: | 
-          echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-          echo "TAG=${{ steps.latest-tag.outputs.VERSION }}" >> $GITHUB_ENV
+      # - name: Get the latest tag from the main branch
+      #   id: latest-tag
+      #   run: | 
+      #     echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      #     echo "TAG=${{ steps.latest-tag.outputs.VERSION }}" >> $GITHUB_ENV
+
+      - name: 'Get Previous Tag'
+        id: previous-tag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        run: echo "TAG=${{ steps.previous-tag.outputs.tag }}" >> $GITHUB_ENV
 
       - name: Display the version and tag
         run: |
