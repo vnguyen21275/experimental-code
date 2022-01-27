@@ -30,7 +30,7 @@ jobs:
 
       - name: Get the latest tag from the main branch
         id: latest-tag
-        run: echo "TAG=${{GITHUB_REF/refs\/tags\//}}" >> $GITHUB_ENV
+        run: echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
 
       - name: Display the version and tag
         run: |
