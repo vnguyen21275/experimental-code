@@ -5,13 +5,13 @@ name: Shall I Release to Prod?
 # 4. Release to prod.
 
 # Only run if the PR closed by merging to main
-on:
-  pull_request:
-    types: [closed]
-    branches: [main]
+# on:
+#   pull_request:
+#     types: [closed]
+#     branches: [main]
 
 # Just for testing on my feature branch
-# on: push
+on: push
 
 jobs:
   get-versions:
@@ -40,7 +40,7 @@ jobs:
       - name: package-version-to-git-tag
         uses: pkgdeps/git-tag-action@v2
         with:
-          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           github_repo: ${{ github.repository }}
           version: ${{ env.NEW_VERSION }}
           git_commit_sha: ${{ github.sha }}
