@@ -2,44 +2,69 @@ name: Test Area
 
 on: push
 
+# jobs:
+#   clean-tag:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: bhowell2/github-substring-action@v1.0.0
+#         id: one
+#         with:
+#           value: v1.0.0
+#           index_of_str: v
+
+#     outputs:
+#       var1: 1.10.0  # this is a bigger version
+#       # var2: v1.0.0    # this string has a v
+#       cleaned: ${{ steps.one.outputs.substring }}
+
+#   log-versions:
+#     runs-on: ubuntu-latest
+#     needs: [clean-tag]
+#     steps:
+#       - name: Get Versions
+#         run: |
+#             echo var1: ${{ needs.clean-tag.outputs.var1 }}
+#             echo var2: ${{ needs.clean-tag.outputs.var2 }}
+#             echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
+#       - uses: jackbilestech/semver-compare@1.0.0
+#         with:
+#           head: ${{ needs.clean-tag.outputs.var1 }}
+#           base: ${{ needs.clean-tag.outputs.cleaned }}
+#           operator: '>'
+
+
+#   positive-case:
+#     runs-on: ubuntu-latest
+#     needs: [clean-tag, log-versions]
+#     # if: ${{ needs.clean-tag.outputs.var1 > needs.clean-tag.outputs.cleaned }} # this sucks
+#     steps:
+#       - name: Positive Pass?
+#         run: |
+#           echo ${{ needs.clean-tag.outputs.var1 }} is greater than ${{ needs.clean-tag.outputs.var2 }}
+
+
 jobs:
-  clean-tag:
+  compare:
     runs-on: ubuntu-latest
     steps:
-      - uses: bhowell2/github-substring-action@v1.0.0
-        id: one
+      - uses: actions/checkout@v2
+
+      - name: "Compare Version"
+        id: compare
+        uses: kylorhall/compare-package-json-version-with-latest@v1.1.1
         with:
-          value: 'v1.9.0'
-          index_of_str: v
+          repository: ${{ github.repository }}
 
-    outputs:
-      var1: 1.10.0  # this is a bigger version
-      var2: v1.0.0    # this string has a v
-      cleaned: ${{ steps.one.outputs.substring }}
-
-  log-versions:
-    runs-on: ubuntu-latest
-    needs: [clean-tag]
-    steps:
-      - name: Get Versions
+      - name: Debug
         run: |
-            echo var1: ${{ needs.clean-tag.outputs.var1 }}
-            echo var2: ${{ needs.clean-tag.outputs.var2 }}
-            echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
-      - uses: jackbilestech/semver-compare@1.0.0
-        with:
-          head: ${{ needs.clean-tag.outputs.var1 }}
-          base: ${{ needs.clean-tag.outputs.cleaned }}
-          operator: '>'
+          echo current_version: ${{ steps.compare.outputs.current_version }}
+          echo latest_version: ${{ steps.compare.outputs.latest_version }}
+          echo matches?: ${{ steps.compare.outputs.matches }}
+          echo newer?: ${{ steps.compare.outputs.newer }}
+          echo diff: ${{ steps.compare.outputs.diff }}
 
-
-  positive-case:
-    runs-on: ubuntu-latest
-    needs: [clean-tag, log-versions]
-    # if: ${{ needs.clean-tag.outputs.var1 > needs.clean-tag.outputs.cleaned }} # this sucks
-    steps:
-      - name: Positive Pass?
+      - name: Fail if not newer
+        if: steps.compare.outputs.newer != 'true'
         run: |
-          echo ${{ needs.clean-tag.outputs.var1 }} is greater than ${{ needs.clean-tag.outputs.var2 }}
-      
-      
+          echo Version was not newer: ${{ steps.compare.outputs.current_version }} vs. ${{ steps.compare.outputs.latest_version }}
+          exit 1
