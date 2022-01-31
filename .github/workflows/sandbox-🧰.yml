@@ -2,11 +2,6 @@ name: Test Area
 
 on: push
 
-# env:
-#   var1: 1.0.1   # this is a bigger number
-#   var2: v1.0.0  # this string has a v
-#   var3: answer
-
 jobs:
   clean-tag:
     runs-on: ubuntu-latest

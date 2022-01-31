@@ -20,15 +20,20 @@ jobs:
         id: package-version
       - uses: WyriHaximus/github-action-get-previous-tag@v1
         id: previous-tag
+      - uses: bhowell2/github-substring-action@v1.0.0
+        id: clean-tag
+        with:
+          value: ${{ steps.previous-tag.outputs.tag }}
+          index_of_str: v
 
     outputs:
         VERSION: ${{ steps.package-version.outputs.version }} # Store the version from the package.json as an output variable
-        TAG: ${{ steps.previous-tag.outputs.tag }} # Store the previous tag as an output variable
+        TAG: ${{ steps.clean-tag.outputs.substring }} # Store the previous (without the 'v') tag as an output variable 
 
   create-and-push-tag:
     runs-on: ubuntu-latest
     needs: get-versions
-    if: ${{ needs.get-versions.outputs.VERSION > needs.get-versions.outputs.TAG }} # This comparison might not be robust...
+    if: ${{ needs.get-versions.outputs.VERSION > needs.get-versions.outputs.TAG }}
     steps:
       - name: Version is greater here, so let's party!
         run: echo "NEW_VERSION=${{ needs.get-versions.outputs.VERSION }}" >> $GITHUB_ENV
