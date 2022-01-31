@@ -9,7 +9,7 @@ jobs:
       - uses: bhowell2/github-substring-action@v1.0.0
         id: one
         with:
-          value: v1.0.0
+          value: v1.9.0
           index_of_str: v
 
     outputs:
@@ -30,8 +30,8 @@ jobs:
       - name: Compare!
         uses: jackbilestech/semver-compare@1.0.0
         with:
-          head: ${{ needs.clean-tag.outputs.var1 }} # feature branch
-          base: ${{ needs.clean-tag.outputs.var2 }} # main
+          head: ${{ needs.clean-tag.outputs.var1 }}    # feature branch
+          base: ${{ needs.clean-tag.outputs.cleaned }} # main
           operator: '>'
 
       - name: Positive Pass?
