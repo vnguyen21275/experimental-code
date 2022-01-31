@@ -1,6 +1,9 @@
 name: Test Area
 
-on: push
+on: 
+  push: 
+    branches:
+      - vnguyen/auto-tagger-and-auto-releaser
 
 jobs:
   check-version:
