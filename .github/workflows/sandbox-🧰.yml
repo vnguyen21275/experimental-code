@@ -17,8 +17,8 @@ jobs:
           value: ${{ env.var2 }}
           index_of_str: v
 
-      - name: Try it out
-        run: echo "var3=${{ steps.one.outputs.substring }}" >> $GITHUB_ENV # '1.0.0'
+    outputs:
+      cleaned: ${{ steps.one.outputs.substring }}
 
   whatever-xD:
     runs-on: ubuntu-latest
@@ -26,7 +26,7 @@ jobs:
     env:
       var1: 1.0.1   # this is a bigger number
       var2: v1.0.0  # this string has a v
-      var3: ${{ steps.one.outputs.substring }}
+      var3: ${{ needs.clean-tag.outputs.cleaned }}
     if: ${{ env.var1 > env.var3 }}
     steps:
       - name: isobopbelbee
