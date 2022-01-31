@@ -23,5 +23,9 @@ jobs:
     if: ${{ needs.clean-tag.outputs.var1 > needs.clean-tag.outputs.cleaned }}
     steps:
       - name: isobopbelbee
-        run: echo WE DID ITTTTT!
+        run: |
+          echo WE DID ITTTTT!
+          echo var1: ${{ needs.clean-tag.outputs.var1 }}
+          echo var2: ${{ needs.clean-tag.outputs.var2 }}
+          echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
       
