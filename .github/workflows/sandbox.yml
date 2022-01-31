@@ -16,6 +16,8 @@ jobs:
         with:
           value: ${{ env.var2 }}
           index_of_str: v
+
+      - name: Try it out
         run: echo "var3=${{ steps.one.outputs.substring }}" >> $GITHUB_ENV # '1.0.0'
 
   whatever-xD:
