@@ -16,12 +16,13 @@ jobs:
         with:
           value: ${{ env.var2 }}
           index_of_str: v
-        run: echo "var3=${{ steps.one.outputs.substring }}" >> $GITHUB_ENV # 'c123'
+        run: echo "var3=${{ steps.one.outputs.substring }}" >> $GITHUB_ENV # '1.0.0'
 
   whatever-xD:
     runs-on: ubuntu-latest
     needs: [clean-tag]
     if: ${{ env.var1 > env.var3 }}
     steps:
-      - run: echo WE DID ITTTTT!
+      - name: isobopbelbee
+        run: echo WE DID ITTTTT!
       
