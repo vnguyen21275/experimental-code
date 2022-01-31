@@ -1,7 +1,4 @@
 name: Create Tag
-# 1. Upon PR merge, compare version in package.json vs latest GH tag.
-# 2. Create a new tag if the version in the package.json is greater than the latest GH tag. If not, end the process
-# 3. Push the tag.
 
 # Only run if the PR closed by merging to main
 on:
@@ -19,7 +16,10 @@ jobs:
       new_tag: ${{ steps.tag_check.outputs.git_tag_name }}
     steps:
       - uses: actions/checkout@v2.4.0
-      - uses: dudo/tag_check@v1.0.0 # checks if the package.json version exists as a tag in GitHub
+
+      # Checks if the package.json version exists as a tag in GitHub
+      # Will not push a currently existing tag
+      - uses: dudo/tag_check@v1.0.0
         id: tag_check
         with:
           git_tag_prefix: v
