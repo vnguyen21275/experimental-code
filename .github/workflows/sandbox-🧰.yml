@@ -13,8 +13,8 @@ jobs:
           index_of_str: v
 
     outputs:
-      var1: 1.9.1    # this is a smaller number
-      var2: v1.10.0  # this string has a v and the bigger number
+      var1: 1.10.0    # this is a bigger version
+      var2: v1.9.0    # this string has a v
       cleaned: ${{ steps.one.outputs.substring }}
 
   positive-case:
@@ -27,6 +27,10 @@ jobs:
           head: ${{ needs.clean-tag.outputs.var1 }} # feature branch
           base: ${{ needs.clean-tag.outputs.var2 }} # main
           operator: '>'
+        run: |
+          echo var1: ${{ needs.clean-tag.outputs.var1 }}
+          echo var2: ${{ needs.clean-tag.outputs.var2 }}
+          echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
 
       - name: Positive Pass?
         run: |
