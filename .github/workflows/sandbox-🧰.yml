@@ -13,18 +13,28 @@ jobs:
           index_of_str: v
 
     outputs:
-      var1: 1.9.1    # this is a smaller number
+      var1: "1.9.1"    # this is a smaller number
       var2: v1.10.0  # this string has a v and the bigger number
       cleaned: ${{ steps.one.outputs.substring }}
 
-  whatever-xD:
+  positive-case:
     runs-on: ubuntu-latest
     needs: [clean-tag]
     if: ${{ needs.clean-tag.outputs.var1 > needs.clean-tag.outputs.cleaned }}
     steps:
-      - name: isobopbelbee
+      - name: Positive Pass?
         run: |
-          echo WE DID ITTTTT!
+          echo var1: ${{ needs.clean-tag.outputs.var1 }}
+          echo var2: ${{ needs.clean-tag.outputs.var2 }}
+          echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
+      
+  negative-case:
+    runs-on: ubuntu-latest
+    needs: [clean-tag]
+    if: ${{ needs.clean-tag.outputs.var1 < needs.clean-tag.outputs.cleaned }}
+    steps:
+      - name: Negative Pass?
+        run: |
           echo var1: ${{ needs.clean-tag.outputs.var1 }}
           echo var2: ${{ needs.clean-tag.outputs.var2 }}
           echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
