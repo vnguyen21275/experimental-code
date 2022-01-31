@@ -13,11 +13,11 @@ jobs:
           index_of_str: v
 
     outputs:
-      var1: '1.10.0'  # this is a bigger version
+      var1: 1.10.0  # this is a bigger version
       var2: v1.9.0    # this string has a v
       cleaned: ${{ steps.one.outputs.substring }}
 
-  positive-case:
+  compare:
     runs-on: ubuntu-latest
     needs: [clean-tag]
     steps:
@@ -27,13 +27,12 @@ jobs:
             echo var2: ${{ needs.clean-tag.outputs.var2 }}
             echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
 
-      - name: Compare!
-        uses: jackbilestech/semver-compare@1.0.0
-        with:
-          head: ${{ needs.clean-tag.outputs.var1 }}    # feature branch
-          base: ${{ needs.clean-tag.outputs.cleaned }} # main
-          operator: '>'
 
+  positive-case:
+    runs-on: ubuntu-latest
+    needs: [clean-tag, compare]
+    if: ${{ needs.clean-tag.outputs.var1 > needs.clean-tag.outputs.cleaned }}
+    steps:
       - name: Positive Pass?
         run: |
           echo ${{ needs.clean-tag.outputs.var1 }} is greater than ${{ needs.clean-tag.outputs.var2 }}
