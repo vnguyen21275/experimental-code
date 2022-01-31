@@ -9,11 +9,11 @@ jobs:
       - uses: bhowell2/github-substring-action@v1.0.0
         id: one
         with:
-          value: v1.9.0
+          value: 'v1.9.0'
           index_of_str: v
 
     outputs:
-      var1: 1.10.0    # this is a bigger version
+      var1: '1.10.0'  # this is a bigger version
       var2: v1.9.0    # this string has a v
       cleaned: ${{ steps.one.outputs.substring }}
 
