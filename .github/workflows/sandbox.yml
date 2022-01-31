@@ -1,0 +1,27 @@
+name: Test Area ☣️
+
+on: push
+
+env:
+  var1: 1.0.1   # this is a bigger number
+  var2: v1.0.0  # this string has a v
+  var3: answer
+
+jobs:
+  clean-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: bhowell2/github-substring-action
+        id: one
+        with:
+          value: ${{ env.var2 }}
+          index_of_str: v
+        run: echo "var3=${{ steps.one.outputs.substring }}" >> $GITHUB_ENV # 'c123'
+
+  whatever-xD:
+    runs-on: ubuntu-latest
+    needs: [clean-tag]
+    if: ${{ env.var1 > env.var3 }}
+    steps:
+      - run: echo WE DID ITTTTT!
+      
