@@ -11,7 +11,7 @@ jobs:
   clean-tag:
     runs-on: ubuntu-latest
     steps:
-      - uses: bhowell2/github-substring-action
+      - uses: bhowell2/github-substring-action@v1.0.0
         id: one
         with:
           value: ${{ env.var2 }}
