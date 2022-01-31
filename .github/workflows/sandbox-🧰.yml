@@ -21,21 +21,21 @@ jobs:
     runs-on: ubuntu-latest
     needs: [clean-tag]
     steps:
+      - name: Get Versions
+        run: |
+            echo var1: ${{ needs.clean-tag.outputs.var1 }}
+            echo var2: ${{ needs.clean-tag.outputs.var2 }}
+            echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
+
       - name: Compare!
         uses: jackbilestech/semver-compare@1.0.0
         with:
           head: ${{ needs.clean-tag.outputs.var1 }} # feature branch
           base: ${{ needs.clean-tag.outputs.var2 }} # main
           operator: '>'
-        run: |
-          echo var1: ${{ needs.clean-tag.outputs.var1 }}
-          echo var2: ${{ needs.clean-tag.outputs.var2 }}
-          echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
 
       - name: Positive Pass?
         run: |
-          echo var1: ${{ needs.clean-tag.outputs.var1 }}
-          echo var2: ${{ needs.clean-tag.outputs.var2 }}
-          echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
+          echo ${{ needs.clean-tag.outputs.var1 }} is greater than ${{ needs.clean-tag.outputs.var2 }}
       
       
