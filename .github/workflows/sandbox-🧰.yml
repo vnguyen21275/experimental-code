@@ -26,12 +26,17 @@ jobs:
             echo var1: ${{ needs.clean-tag.outputs.var1 }}
             echo var2: ${{ needs.clean-tag.outputs.var2 }}
             echo cleaned: ${{ needs.clean-tag.outputs.cleaned }}
+      - uses: jackbilestech/semver-compare@1.0.0
+        with:
+          head: ${{ needs.clean-tag.outputs.var1 }}
+          base: ${{ needs.clean-tag.outputs.cleaned }}
+          operator: '>'
 
 
   positive-case:
     runs-on: ubuntu-latest
     needs: [clean-tag, log-versions]
-    if: ${{ needs.clean-tag.outputs.var1 < needs.clean-tag.outputs.cleaned }} # this sucks
+    # if: ${{ needs.clean-tag.outputs.var1 > needs.clean-tag.outputs.cleaned }} # this sucks
     steps:
       - name: Positive Pass?
         run: |
