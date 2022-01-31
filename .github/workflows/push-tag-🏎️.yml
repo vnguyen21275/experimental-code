@@ -1,8 +1,7 @@
-name: Shall I Release to Prod?
+name: Create Tag
 # 1. Upon PR merge, compare version in package.json vs latest GH tag.
 # 2. Create a new tag if the version in the package.json is greater than the latest GH tag. If not, end the process
 # 3. Push the tag.
-# 4. Release to prod.
 
 # Only run if the PR closed by merging to main
 on:
@@ -10,14 +9,11 @@ on:
     types: [closed]
     branches: [main]
 
-# Just for testing on my feature branch
-# on: push
-
 jobs:
   get-versions:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@latest
         with:
           fetch-depth: 0
       - uses: gagle/package-version@v1.0.0
@@ -26,18 +22,18 @@ jobs:
         id: previous-tag
 
     outputs:
-        VERSION: ${{ steps.package-version.outputs.version }} # Read the version from the package.json and store it as the environment variable VERSION
-        TAG: ${{ steps.previous-tag.outputs.tag }} # Get previous tag and store it as the environment variable TAG
+        VERSION: ${{ steps.package-version.outputs.version }} # Store the version from the package.json as an output variable
+        TAG: ${{ steps.previous-tag.outputs.tag }} # Store the previous tag as an output variable
 
-  create-tag:
+  create-and-push-tag:
     runs-on: ubuntu-latest
     needs: get-versions
-    if: ${{ needs.get-versions.outputs.VERSION > needs.get-versions.outputs.TAG }}
+    if: ${{ needs.get-versions.outputs.VERSION > needs.get-versions.outputs.TAG }} # This comparison might not be robust...
     steps:
       - name: Version is greater here, so let's party!
         run: echo "NEW_VERSION=${{ needs.get-versions.outputs.VERSION }}" >> $GITHUB_ENV
 
-      - name: package-version-to-git-tag
+      - name: Create & push the tag (will take a few minutes to appear on GitHub) 
         uses: pkgdeps/git-tag-action@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
