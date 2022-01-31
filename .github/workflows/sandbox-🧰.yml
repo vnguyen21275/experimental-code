@@ -53,6 +53,7 @@ jobs:
         id: compare
         uses: kylorhall/compare-package-json-version-with-latest@v1.1.1
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
 
       - name: Debug
