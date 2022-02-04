@@ -1,9 +1,12 @@
 name: Release the Latest Tag
 
-# Controls when the action will run. 
+# Invoke the workflow only when a tag is pushed
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  create:
+  push:
+    branches:
+      - "!*"
+    tags:
+      - "v*"
 
 jobs:
   release_tag:
