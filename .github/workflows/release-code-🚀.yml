@@ -1,4 +1,4 @@
-name: Release the Latest Tag
+name: Release Code
 
 # Invoke the workflow after the Create Tag workflow has succeeded
 on:
@@ -10,7 +10,7 @@ jobs:
   release_tag:
     name: Tagged Release 
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == success }}
 
     steps:
       - uses: actions/checkout@v2.2.0
@@ -18,9 +18,9 @@ jobs:
           fetch-depth: 0 # Required due to the way Git works; without it, this action won't be able to find any of the correct tags
       - name: Get Latest Tag
         id: latest_tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        uses: WyriHaximus/github-action-get-previous-tag@v1
 
-      - name: Release Tag
+      - name: Release the Latest Tag
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
