@@ -1,10 +1,10 @@
 name: Release the Latest Tag
 
-# Invoke the workflow only when a tag is pushed
+# Invoke the workflow only when a tag is pushed to main
 on:
   push:
-    branches: [main] # Sequence of patterns matched against refs/heads
-    tags: ['*'] # Pattern matched against refs/tags
+    branches: [main]
+    tags: ['*']
 
 jobs:
   release_tag:
@@ -12,14 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
       - uses: marvinpinto/action-automatic-releases@v1.2.1
+        id: auto_releaser_action
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           automatic_release_tag: latest
           prerelease: false
-          title: Wacky Whoohoo Pizza Time
-          files: |
-            LICENSE.txt
-            *.jar
+          title: ${{ steps.auto_releaser_action.outputs.automatic_releases_tag }} Wacky Whoohoo Pizza Time
