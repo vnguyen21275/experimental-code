@@ -16,6 +16,6 @@ jobs:
         id: auto_releaser_action
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: latest
+          automatic_release_tag: v3.11.6 # temporary
           prerelease: false
           title: ${{ steps.auto_releaser_action.outputs.automatic_releases_tag }} Wacky Whoohoo Pizza Time
