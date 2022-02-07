@@ -3,13 +3,14 @@ name: Release Code
 # Invoke the workflow after the Create Tag workflow has succeeded
 on:
   workflow_run:
-    workflows: [Create Tag]
+    workflows: [Push Tag]
     types: [completed]
 
 jobs:
   release_tag:
     name: Tagged Release 
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - uses: actions/checkout@v2.2.0
