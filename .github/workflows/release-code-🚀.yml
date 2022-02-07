@@ -1,10 +1,14 @@
 name: Release the Latest Tag
 
 # Invoke the workflow only when a tag is pushed to main
+# AND after push-tag-🏎️ is done
 on:
   push:
     branches: [main]
     tags: ['*']
+  workflow_run:
+    workflows: [push-tag-🏎️]
+    types: [completed]
 
 jobs:
   release_tag:
@@ -24,4 +28,4 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           automatic_release_tag: ${{ steps.latest_tag.outputs.tag }}
           prerelease: false
-          title: ${{ steps.latest_tag.outputs.tag }} Wacky Woohoo Pizza Time
+          title: ${{ steps.latest_tag.outputs.tag }} Wacky Woohoo Pizza Time!!@! 🍕🚀
