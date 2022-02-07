@@ -1,11 +1,7 @@
 name: Release the Latest Tag
 
-# Invoke the workflow only when a tag is pushed to main
-# AND after the Create Tag workflow is done
+# Invoke the workflow only after the Create Tag workflow is done
 on:
-  push:
-    branches: [main]
-    tags: ['*']
   workflow_run:
     workflows: [Create Tag]
     types: [completed]
