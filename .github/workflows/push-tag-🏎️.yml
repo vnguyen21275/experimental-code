@@ -14,6 +14,8 @@ jobs:
     outputs:
       new_tag: ${{ steps.tag_check.outputs.git_tag_name }}
     steps:
+      - uses: actions/checkout@v2.4.0
+
       # Check if the package.json version exists as a tag in GitHub
       # Stop the workflow if the package.json version matches a currently existing tag
       # Else, return the package.json version as outputs.new_tag
