@@ -16,9 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
 
-      # Checks if the package.json version exists as a tag in GitHub
-      # Will not push a currently existing tag
-      # And returns the package.json version as output.new_tag
+      # Check if the package.json version exists as a tag in GitHub
+      # Stop the workflow if the package.json version matches a currently existing tag
+      # Else, return the package.json version as outputs.new_tag
       - uses: dudo/tag_check@v1.0.0
         id: tag_check
         with:
