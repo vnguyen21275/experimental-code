@@ -1,9 +1,8 @@
 name: Create Tag
 
-# Only run if the PR closed by merging to main
+# Only run if a commit is pushed to main (also includes PR's merged)
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches: [main]
 
 jobs:
