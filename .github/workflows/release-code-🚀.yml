@@ -1,6 +1,6 @@
 name: Release Code
 
-# Invoke the workflow after the Create Tag workflow has succeeded
+# Invoke the workflow after the Push Tag workflow has succeeded
 on:
   workflow_run:
     workflows: [Push Tag]
