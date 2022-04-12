@@ -23,7 +23,7 @@ jobs:
         with:
           target-branch: main
           tag-prefix: v
-          commit-message: ${{version}}
+          commit-message: 'Bump to {{version}}'
           default: minor
           major-wording: MAJOR,bigmode
           minor-wording: feat,lezzgo
