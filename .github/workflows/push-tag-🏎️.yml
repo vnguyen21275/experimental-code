@@ -25,3 +25,4 @@ jobs:
           tag-prefix: v
           default: minor
           commit-message: 'CI: {{version}}'
+          patch-wording:  patch
