@@ -3,7 +3,7 @@ name: Push Tag
 # Run if a commit is pushed to main or a PR is merged to main
 on:
   push:
-    branches: [main]
+    branches: [dev]
 
 jobs:
   get_package_version:
