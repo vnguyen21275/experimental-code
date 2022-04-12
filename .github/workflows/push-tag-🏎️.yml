@@ -23,6 +23,5 @@ jobs:
         with:
           target-branch: main
           tag-prefix: v
-          default: minor
-          commit-message: 'CI: {{version}}'
-          patch-wording:  patch
+          # default: minor
+          commit-message: '{{version}}'
