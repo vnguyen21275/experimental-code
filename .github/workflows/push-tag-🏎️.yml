@@ -24,3 +24,5 @@ jobs:
           target-branch: main
           tag-prefix: v
           default: minor
+          commit-message: 'CI: {{version}} [skip ci]'
+          patch-wording:  'isobopbelbee'
