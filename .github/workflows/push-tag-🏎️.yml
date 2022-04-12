@@ -23,5 +23,8 @@ jobs:
         with:
           target-branch: main
           tag-prefix: v
-          # default: minor
           commit-message: '{{version}}'
+          default: minor
+          major-wording: 'MAJOR'
+          minor-wording: 'feat'
+          patch-wording: 'patch' 
