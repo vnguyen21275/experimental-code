@@ -1,0 +1,36 @@
+{
+  "categories": [
+    {
+      "title": "## 🚀 Features",
+      "labels": ["feature"]
+    },
+    {
+      "title": "## 🐛 Fixes",
+      "labels": ["fix"]
+    },
+    {
+      "title": "## 🧪 Tests",
+      "labels": ["test"]
+    },
+    {
+      "title" : "## Other",
+      "labels" : ["other"]
+    }
+  ],
+  "sort": "ASC",
+  "template": "${{CHANGELOG}}\n\n ## Unlabeled PRs: \n\n${{UNCATEGORIZED}}\n",
+  "pr_template": "- PR: #${{NUMBER}} ${{TITLE}} - by @${{AUTHOR}}",
+  "empty_template": "Unable to generate release notes",
+  "transformers": [
+    {
+      "pattern": "[\\-\\*] (\\[(...|TEST|CI|SKIP)\\])( )?(.+?)\n(.+?[\\-\\*] )(.+)",
+      "target": "- $4\n  - $6"
+    }
+  ],
+  "max_tags_to_fetch": 200,
+  "max_pull_requests": 200,
+  "max_back_track_time_days": 90,
+  "exclude_merge_branches": [
+    "Owner/qa"
+  ]
+} 
