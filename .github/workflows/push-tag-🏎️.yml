@@ -24,4 +24,3 @@ jobs:
           major-wording: MAJOR,bigmode
           minor-wording: feat,lezzgo
           patch-wording: patch,piza
-          default: minor
