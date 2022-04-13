@@ -19,10 +19,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          target-branch: main
           tag-prefix: v
           commit-message: 'Bump to {{version}}'
           major-wording: MAJOR,bigmode
           minor-wording: feat,lezzgo
-          patch-wording: patch
+          patch-wording: patch,piza
           default: minor
