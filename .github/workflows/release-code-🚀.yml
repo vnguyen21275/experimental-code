@@ -1,9 +1,9 @@
-name: Release Code
+name: Release to Production
 
 # Invoke the workflow after the Push Tag workflow has succeeded
 on:
   workflow_run:
-    workflows: [Push Tag]
+    workflows: [Bump Version and Push Tag]
     types: [completed]
 
 jobs:
