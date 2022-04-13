@@ -8,7 +8,7 @@ on:
 
 jobs:
   release_tag:
-    name: Tagged Release 
+    name: 'Auto Tagger: Release to Production'
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
