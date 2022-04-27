@@ -12,15 +12,22 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
 
-      - name:  Automated Version Bump
-        uses:  phips28/gh-action-bump-version@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Check if the package.json version exists as a tag in GitHub
+      # Stop the workflow if the package.json version matches a currently existing tag
+      # Else, return the package.json version as outputs.new_tag
+      - name: Check Package.json
+        uses: dudo/tag_check@v1.0.0
+        id: tag_check
         with:
-          tag-prefix: v
-          commit-message: 'Bump to {{version}}'
-          major-wording: MAJOR,bigmode
-          minor-wording: feat,lezzgo
-          patch-wording: patch,piza
+          git_tag_prefix: v
+
+      - name: Set Tag Name
+        id: set_tag_name
+        run: echo "::set-output name=tag_name::v${{ steps.tag_check.outputs.git_tag_name }}"
+
+      - name: Create and Push Tag
+        run: |
+          git tag ${{ steps.set_tag_name.outputs.tag_name }}
+          git push origin ${{ steps.set_tag_name.outputs.tag_name }}

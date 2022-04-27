@@ -1,11 +1,11 @@
 {
   "categories": [
     {
-      "title": "## 🚀 Features",
+      "title": "## 🚀 Feature",
       "labels": ["feature"]
     },
     {
-      "title": "## 🐛 Fixes",
+      "title": "## 🐛 Fix",
       "labels": ["fix"]
     },
     {
@@ -18,7 +18,7 @@
     }
   ],
   "sort": "ASC",
-  "template": "${{CHANGELOG}}\n\n ## Unlabeled PRs: \n\n${{UNCATEGORIZED}}\n",
+  "template": "${{CHANGELOG}}\n\n ## Released PR: \n\n${{UNCATEGORIZED}}\n",
   "pr_template": "- PR: #${{NUMBER}} ${{TITLE}} - by @${{AUTHOR}}",
   "empty_template": "Unable to generate release notes",
   "transformers": [
@@ -33,4 +33,4 @@
   "exclude_merge_branches": [
     "Owner/qa"
   ]
-} 
+}
