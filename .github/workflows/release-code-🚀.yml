@@ -11,26 +11,36 @@ jobs:
     name: 'Auto Tagger: Release to Production'
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v2.2.0
+      - name: Checkout Repo
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Required due to the way Git works; without it, this action won't be able to find any of the correct tags
+          persist-credentials: true
+          ref: ${{ github.ref }}
+          token: ${{ secrets.BOT_TOKEN }}
+
+
+      - name: Set Author
+        run: |
+          git config --local user.name 'internal-toolsbot'
+          git config --local user.email 'internal-toolsbot@users.noreply.github.com'
+          
       - name: Get Latest Tag
         id: latest_tag
         uses: WyriHaximus/github-action-get-previous-tag@v1
 
       - name: Build Changelog
-        id: build_changelog
-        uses: mikepenz/release-changelog-builder-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: release_changelog
+        uses: mikepenz/release-changelog-builder-action@v2.9.0
+        with:
+          configuration: '.github/workflows/release-notes-config.json'
 
-      - name: Release the Latest Tag
+      - name: Create Release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ steps.latest_tag.outputs.tag }}
-          release_name: ${{ steps.latest_tag.outputs.tag }} Wacky Woohoo Pizza Time!!@! 🍕🚀
-          body: ${{steps.build_changelog.outputs.changelog}}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          release_name: ${{ steps.latest_tag.outputs.tag }}
+          body: ${{steps.release_changelog.outputs.changelog}}
