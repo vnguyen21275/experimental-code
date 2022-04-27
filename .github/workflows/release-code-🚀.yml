@@ -20,13 +20,13 @@ jobs:
           fetch-depth: 0 # Required due to the way Git works; without it, this action won't be able to find any of the correct tags
           persist-credentials: true
           ref: ${{ github.ref }}
-          token: ${{ secrets.BOT_TOKEN }}
+          # token: ${{ secrets.BOT_TOKEN }} # commented out for now; will need for internal-toolsbot
 
 
-      - name: Set Author
-        run: |
-          git config --local user.name 'internal-toolsbot'
-          git config --local user.email 'internal-toolsbot@users.noreply.github.com'
+      # - name: Set Author # commented out for now; will need for internal-toolsbot
+      #   run: |
+      #     git config --local user.name 'internal-toolsbot'
+      #     git config --local user.email 'internal-toolsbot@users.noreply.github.com'
           
       - name: Get Latest Tag
         id: latest_tag
