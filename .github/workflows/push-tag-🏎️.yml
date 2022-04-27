@@ -25,7 +25,7 @@ jobs:
 
       - name: Set Tag Name
         id: set_tag_name
-        run: echo "::set-output name=tag_name::v${{ steps.tag_check.outputs.git_tag_name }}"
+        run: echo "::set-output name=tag_name::${{ steps.tag_check.outputs.git_tag_name }}"
 
       - name: Create and Push Tag
         run: |
