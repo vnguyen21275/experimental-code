@@ -1,0 +1,77 @@
+name: Auto Tagger
+
+# Developer Preference
+# 1) Run if a commit is pushed to main or a PR is merged to main
+on:
+  push:
+    branches: [main]
+
+# 2) Run only if a PR is merged to main
+# on:
+#   pull_request:
+#     branches:
+#       - main
+#     types: [closed]
+
+jobs:
+  tag_and_release:
+    name: Create a New Tag and Release to Production
+    runs-on: ubuntu-latest
+    # if: ${{ github.event.pull_request.merged }} # 2) Run only if a PR is merged to commit
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          ref: ${{ github.ref }}
+          # A personal access token for the bot for permissions in this workflow
+          # token: ${{ secrets.BOT_TOKEN }} # commented out for now; will need for internal-toolsbot
+      
+      # Intended for associating any author to the commit (required by git)
+      # - name: Set Author # commented out for now; will need for internal-toolsbot
+      #   run: |
+      #     git config --local user.name 'internal-toolsbot' # Insert your own bot here
+      #     git config --local user.email 'internal-toolsbot@users.noreply.github.com' # Insert your own bot here
+
+      # Developer Preference
+      # A) Check if the package.json version exists as a tag in GitHub
+      # Stop the workflow if the package.json version matches a currently existing tag
+      # Else, return the package.json version as outputs.new_tag
+      - name: Check Package.json
+        uses: dudo/tag_check@v1.0.0
+        id: tag_check
+        with:
+          git_tag_prefix: v
+
+      # B) Bump the version based on a keyword or conventional commit
+      # defined in the bump-version.config.json
+      # - name: Bump Version
+      #   id: bump_version
+      #   uses: 'dtgreene/keyword-version-bump@main'
+      #   with:
+      #     search-target: ${{ github.event.pull_request.title }}
+      #     configuration: '.github/workflows/bump-version.config.json'
+
+      - name: Set Tag Name
+        id: set_tag_name
+        run: echo "::set-output name=tag_name::${{ steps.tag_check.outputs.git_tag_name }}"
+
+      - name: Create and Push Tag
+        run: |
+          git tag ${{ steps.set_tag_name.outputs.tag_name }}
+          git push origin ${{ steps.set_tag_name.outputs.tag_name }}
+
+      - name: Build Changelog
+        id: release_changelog
+        uses: mikepenz/release-changelog-builder-action@v2.9.0
+        with:
+          configuration: '.github/workflows/release-notes-config.json'
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.latest_tag.outputs.tag }}
+          release_name: ${{ steps.latest_tag.outputs.tag }}
+          body: ${{steps.release_changelog.outputs.changelog}}
