@@ -2,22 +2,22 @@ name: Auto Tagger
 
 # Developer Preference
 # 1) Run if a commit is pushed to main or a PR is merged to main
-on:
-  push:
-    branches: [main]
+# on:
+#   push:
+#     branches: [main]
 
 # 2) Run only if a PR is merged to main
-# on:
-#   pull_request:
-#     branches:
-#       - main
-#     types: [closed]
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
 
 jobs:
   tag_and_release:
     name: Create a New Tag and Release to Production
     runs-on: ubuntu-latest
-    # if: ${{ github.event.pull_request.merged }} # 2) Run only if a PR is merged to commit
+    if: ${{ github.event.pull_request.merged }} # 2) Run only if a PR is merged to commit
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
