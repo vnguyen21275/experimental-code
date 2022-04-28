@@ -1,0 +1,18 @@
+{
+  "bump_types": [
+    {
+      "type": "major",
+      "keywords": []
+    },
+    {
+      "type": "minor",
+      "keywords": ["minor:", "feat:", "feature:"]
+    },
+    {
+      "type": "patch",
+      "keywords": ["patch:", "fix:", "bug:"]
+    }
+  ],
+  "default_bump_type": "patch",
+  "commit_message": "[skip ci]: Automated version bump {version}"
+}
