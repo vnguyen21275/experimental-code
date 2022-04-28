@@ -14,5 +14,5 @@
     }
   ],
   "default_bump_type": "patch",
-  "commit_message": "[skip ci]: Automated version bump {version}"
+  "commit_message": "Automated version bump {version}"
 }
