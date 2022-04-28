@@ -1,12 +1,6 @@
 name: Auto Tagger
 
-# Developer Preference
-# 1) Run if a commit is pushed to main or a PR is merged to main
-# on:
-#   push:
-#     branches: [main]
-
-# 2) Run only if a PR is merged to main
+# Run only if a PR is merged to main
 on:
   pull_request:
     branches:
@@ -17,7 +11,7 @@ jobs:
   tag_and_release:
     name: Create a New Tag and Release to Production
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged }} # 2) Run only if a PR is merged to commit
+    if: ${{ github.event.pull_request.merged }} # Run only if a PR is merged to commit
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -30,10 +24,10 @@ jobs:
           # token: ${{ secrets.BOT_TOKEN }} # commented out for now; will need for internal-toolsbot
       
       # Intended for associating any author to the commit (required by git)
-      # - name: Set Author # commented out for now; will need for internal-toolsbot
-      #   run: |
-      #     git config --local user.name 'internal-toolsbot' # Insert your own bot here
-      #     git config --local user.email 'internal-toolsbot@users.noreply.github.com' # Insert your own bot here
+      - name: Set Author
+        run: |
+          git config --local user.name 'internal-toolsbot' # Insert your own bot here
+          git config --local user.email 'internal-toolsbot@users.noreply.github.com' # Insert your own bot here
 
       # Developer Preference
       # A) Check if the package.json version exists as a tag in GitHub
