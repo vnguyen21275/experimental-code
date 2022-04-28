@@ -11,7 +11,7 @@ jobs:
   tag_and_release:
     name: Create a New Tag and Release to Production
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged }} # B) Run only if a PR is merged to commit
+    if: ${{ github.event.pull_request.merged }}
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -42,10 +42,10 @@ jobs:
       # defined in the bump-version.config.json
       # - name: Bump Version
       #   id: bump_version
-      #   uses: 'dtgreene/keyword-version-bump@main'
+      #   uses: dtgreene/keyword-version-bump@main
       #   with:
       #     search-target: ${{ github.event.pull_request.title }}
-      #     configuration: '.github/workflows/bump-version.config.json'
+      #     configuration: .github/workflows/bump-version.config.json
 
       - name: Set Tag Name
         id: set_tag_name
@@ -60,7 +60,7 @@ jobs:
         id: release_changelog
         uses: mikepenz/release-changelog-builder-action@v2.9.0
         with:
-          configuration: '.github/workflows/release-notes-config.json'
+          configuration: .github/workflows/release-notes-config.json
 
       - name: Create Release
         uses: actions/create-release@v1
