@@ -11,7 +11,7 @@ jobs:
   tag_and_release:
     name: Create a New Tag and Release to Production
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged }} # Run only if a PR is merged to commit
+    if: ${{ github.event.pull_request.merged }} # B) Run only if a PR is merged to commit
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -20,31 +20,32 @@ jobs:
         with:
           persist-credentials: true
           ref: ${{ github.ref }}
-          # A personal access token for the bot for permissions in this workflow
+          # B) A personal access token for the bot for permissions in this workflow
           # token: ${{ secrets.BOT_TOKEN }} # commented out for now; will need for internal-toolsbot
       
-      # Intended for associating any author to the commit (required by git)
-      - name: Set Author
-        run: |
-          git config --local user.name 'internal-toolsbot' # Insert your own bot here
-          git config --local user.email 'internal-toolsbot@users.noreply.github.com' # Insert your own bot here
+      # B) Intended for associating any author to the commit (required by git)
+      # Insert your own bot here
+      # - name: Set Author
+      #   run: |
+      #     git config --local user.name 'internal-toolsbot' 
+      #     git config --local user.email 'internal-toolsbot@users.noreply.github.com'
 
       # Developer Preference
       # A) Check if the package.json version exists as a tag in GitHub
       # Stop the workflow if the package.json version matches a currently existing tag
       # Else, return the package.json version as outputs.new_tag
-      # - name: Check Package.json
-      #   uses: dudo/tag_check@v1.0.0
-      #   id: bump_version
+      - name: Check Package.json
+        uses: dudo/tag_check@v1.0.0
+        id: bump_version
 
       # B) Bump the version based on a keyword or conventional commit
       # defined in the bump-version.config.json
-      - name: Bump Version
-        id: bump_version
-        uses: 'dtgreene/keyword-version-bump@main'
-        with:
-          search-target: ${{ github.event.pull_request.title }}
-          configuration: '.github/workflows/bump-version.config.json'
+      # - name: Bump Version
+      #   id: bump_version
+      #   uses: 'dtgreene/keyword-version-bump@main'
+      #   with:
+      #     search-target: ${{ github.event.pull_request.title }}
+      #     configuration: '.github/workflows/bump-version.config.json'
 
       - name: Set Tag Name
         id: set_tag_name
