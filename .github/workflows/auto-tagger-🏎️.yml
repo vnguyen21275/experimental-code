@@ -39,22 +39,22 @@ jobs:
       # A) Check if the package.json version exists as a tag in GitHub
       # Stop the workflow if the package.json version matches a currently existing tag
       # Else, return the package.json version as outputs.new_tag
-      - name: Check Package.json
-        uses: dudo/tag_check@v1.0.0
-        id: tag_check
+      # - name: Check Package.json
+      #   uses: dudo/tag_check@v1.0.0
+      #   id: bump_version
 
       # B) Bump the version based on a keyword or conventional commit
       # defined in the bump-version.config.json
-      # - name: Bump Version
-      #   id: bump_version
-      #   uses: 'dtgreene/keyword-version-bump@main'
-      #   with:
-      #     search-target: ${{ github.event.pull_request.title }}
-      #     configuration: '.github/workflows/bump-version.config.json'
+      - name: Bump Version
+        id: bump_version
+        uses: 'dtgreene/keyword-version-bump@main'
+        with:
+          search-target: ${{ github.event.pull_request.title }}
+          configuration: '.github/workflows/bump-version.config.json'
 
       - name: Set Tag Name
         id: set_tag_name
-        run: echo "::set-output name=tag_name::v${{ steps.tag_check.outputs.git_tag_name }}"
+        run: echo "::set-output name=tag_name::v${{ steps.bump_version.outputs.git_tag_name }}"
 
       - name: Create and Push Tag
         run: |
