@@ -3,8 +3,7 @@ name: Auto Tagger
 # Run only if a PR is merged to main
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
     types: [closed]
 
 jobs:
